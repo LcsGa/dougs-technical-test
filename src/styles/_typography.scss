@@ -1,0 +1,24 @@
+$typograpies: (
+  (heading-4, 22px, unset, 26.4px, "Eina03-SemiBold"),
+  (heading-6, 14px, unset, 16.8px, "Eina03-SemiBold"),
+  (text-small, 14px, 400, 16.8px, "Open Sans"),
+  (text-tiny, 12px, 400, 16.34px, "Open Sans")
+);
+
+:root {
+  @each $name, $size, $weight, $line-height, $family in $typograpies {
+    --#{$name}-size: #{$size};
+    --#{$name}-weight: #{$weight};
+    --#{$name}-line-height: #{$line-height};
+    --#{$name}-family: #{$family};
+  }
+}
+
+@each $name, $size, $weight, $line-height, $family in $typograpies {
+  .#{$name} {
+    font-size: var(--#{$name}-size);
+    font-weight: var(--#{$name}-weight);
+    line-height: var(--#{$name}-line-height);
+    font-family: var(--#{$name}-family);
+  }
+}
