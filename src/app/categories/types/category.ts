@@ -4,11 +4,11 @@ export type Category = {
   id: number;
   group?: CategoryGroup;
   wording: string;
-  description: string;
+  description?: string;
 };
 
 export type CategoryGroup = {
   id: number;
   name: string;
-  color: `m-${Color}`;
+  color?: `m-${Color}`;
 };

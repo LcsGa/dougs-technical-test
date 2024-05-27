@@ -61,7 +61,8 @@ export class CategoryCardComponent {
 
   readonly category = input.required<Category>();
 
-  readonly safeDescription = computed(() =>
-    this.#domSanitizer.sanitize(SecurityContext.HTML, this.category().description),
-  );
+  readonly safeDescription = computed(() => {
+    const description = this.category().description;
+    return description ? this.#domSanitizer.sanitize(SecurityContext.HTML, description) : '';
+  });
 }
