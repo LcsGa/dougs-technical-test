@@ -31,13 +31,3 @@ Je n'ai pas versionné le serveur, il faut donc le lancer séparement sur votre 
 - Proxy: Toujours dans l'optique de rester simple, je suis parti sur une `proxy.conf` pour rediriger mes requêtes `/api` vers `http://localhost:3000` en imaginant que les redirections se feraient par le serveur, une fois en prod (sinon il serait également possible de passer par un interceptor, des urls en dur dans un fichier d'environnement, etc.).
 
 - Gestion de pending / errors: j'ai implémenté une solution très simpliste pour gérer l'état des requêtes http. Pour pouvoir le tester plus facilement, j'ai créé un intercépteur configurable dans [app-config.ts](./src/app/app.config.ts).
-
-- Responsive design: Malheureusement je n'ai pas eu le temps de rendre l'application responsive mais dans un vrai projet je n'aurai pas fait l'impasse dessus.
-
-- Data reçue erronnée : J'ai constaté qu'il manque parfois des descriptions et / ou couleurs sur certaines données retournées par le serveur.
-
-  Pour la description, par "chance" je ne fais que l'afficher donc aucune erreur n'est générée
-
-  Pour la couleur, j'ai rajouté une couleur neutre dans le cas où cette dernière manque.
-
-  Dans un vrai projet, j'aurai rajouté la librairie zod pour faire un check au runtime de la data reçue + je me serais rapproché des développeurs backend.
