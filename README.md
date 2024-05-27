@@ -31,3 +31,5 @@ Je n'ai pas versionné le serveur, il faut donc le lancer séparement sur votre 
 - Proxy: Toujours dans l'optique de rester simple, je suis parti sur une `proxy.conf` pour rediriger mes requêtes `/api` vers `http://localhost:3000` en imaginant que les redirections se feraient par le serveur, une fois en prod (sinon il serait également possible de passer par un interceptor, des urls en dur dans un fichier d'environnement, etc.).
 
 - Gestion de pending / errors: j'ai implémenté une solution très simpliste pour gérer l'état des requêtes http. Pour pouvoir le tester plus facilement, j'ai créé un intercépteur configurable dans [app-config.ts](./src/app/app.config.ts).
+
+- Pour ce projet, je n'ai pas mis d'internationalisation en place, mais en tant normal je le ferais le plus souvent via `ngx-translate`.
