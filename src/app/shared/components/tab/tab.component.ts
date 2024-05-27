@@ -21,7 +21,6 @@ import { IconComponent, IconName } from '../icon';
       background-color: var(--tab-bg-color, transparent);
       color: var(--tab-color, var(--text-secondary));
       cursor: pointer;
-      /* FIXME add tokens/props/classes + reorganize */
 
       span {
         font-size: var(--text-tiny-size);
