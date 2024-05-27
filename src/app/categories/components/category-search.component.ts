@@ -14,13 +14,21 @@ import { CategoriesService } from '../categories.service';
   host: { role: 'search' },
   styles: `
     :host {
-      display: flex;
-      column-gap: var(--size-4);
+      display: var(--search-display, flex);
+      gap: var(--size-4);
       padding: var(--size-4) var(--size-4) var(--size-6);
 
       app-form-field {
         &:has(input) {
           flex: 1;
+        }
+      }
+
+      @container (width <= 600px) {
+        --search-display: grid;
+
+        app-select {
+          width: 100%;
         }
       }
     }

@@ -24,6 +24,10 @@ import { Category } from './types/category';
   ],
   selector: 'app-categories',
   styles: `
+    app-card {
+      container-type: inline-size;
+    }
+
     .message {
       padding: 0 var(--size-3) var(--size-3);
 

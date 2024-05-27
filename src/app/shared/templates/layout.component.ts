@@ -6,6 +6,8 @@ import { Title } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-layout',
   styles: `
+    @use '../../../styles/responsive';
+
     $banner-height: 60px;
 
     :host {
@@ -18,6 +20,10 @@ import { Title } from '@angular/platform-browser';
     footer,
     main {
       padding-inline: 122px;
+
+      @include responsive.mobile {
+        padding-inline: var(--size-4);
+      }
     }
 
     header,
@@ -44,8 +50,14 @@ import { Title } from '@angular/platform-browser';
     }
 
     main {
-      padding-top: var(--size-8);
-      padding-bottom: calc(var(--size-8) + #{$banner-height});
+      --layout-padding-inline: var(--size-8);
+
+      padding-top: var(--layout-padding-inline);
+      padding-bottom: calc(var(--layout-padding-inline) + #{$banner-height});
+
+      @include responsive.mobile {
+        --layout-padding-inline: var(--size-4);
+      }
     }
 
     footer {

@@ -6,16 +6,37 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   encapsulation: ViewEncapsulation.None,
   selector: 'app-category-cards-grid',
   styles: `
-    app-category-cards-grid {
-      $cols: 2;
-      $radius: var(--radius-xs);
+    @mixin bottomCornersRadius($cols) {
+      app-category-cards-grid {
+        --card-columns: #{$cols};
+      }
 
+      app-category-card {
+        &:nth-child(#{$cols}n + 1):not(:nth-last-child(n + #{$cols + 1})) {
+          --card-border-bottom-left-radius: var(--radius-xs);
+        }
+
+        &:nth-child(#{$cols}n):last-child {
+          --card-border-bottom-right-radius: var(--radius-xs);
+        }
+      }
+    }
+
+    @include bottomCornersRadius(3);
+
+    @container (width < 720px) {
+      @include bottomCornersRadius(1);
+    }
+
+    app-category-cards-grid {
       display: grid;
-      grid-template-columns: repeat($cols, 1fr);
+      grid-template-columns: repeat(var(--card-columns), 1fr);
       gap: 1px;
 
       app-category-card {
         cursor: pointer;
+        border-bottom-left-radius: var(--card-border-bottom-left-radius, none);
+        border-bottom-right-radius: var(--card-border-bottom-right-radius, none);
 
         &:hover {
           --card-bg-color: var(--surface-hover);
@@ -25,18 +46,6 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
           --card-bg-color: var(--light-blue);
           --card-border-color: var(--blue);
           z-index: 2;
-        }
-      }
-
-      &:last-child {
-        app-category-card {
-          &:nth-child(#{$cols}n + 1):not(:nth-last-child(n + #{$cols + 1})) {
-            border-bottom-left-radius: $radius;
-          }
-
-          &:nth-child(#{$cols}n):last-child {
-            border-bottom-right-radius: $radius;
-          }
         }
       }
     }

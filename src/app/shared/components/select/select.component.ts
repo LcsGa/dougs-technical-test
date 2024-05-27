@@ -32,9 +32,10 @@ import { OptionDirective } from './option.directive';
     app-select {
       position: relative;
       display: inline-block;
+      width: 271px;
 
       app-form-field {
-        width: 271px;
+        width: 100%;
 
         fieldset {
           cursor: pointer;
