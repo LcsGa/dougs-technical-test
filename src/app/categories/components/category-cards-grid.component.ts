@@ -9,15 +9,17 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     @mixin bottomCornersRadius($cols) {
       app-category-cards-grid {
         --card-columns: #{$cols};
-      }
 
-      app-category-card {
-        &:nth-child(#{$cols}n + 1):not(:nth-last-child(n + #{$cols + 1})) {
-          --card-border-bottom-left-radius: var(--radius-xs);
-        }
+        &:last-child {
+          app-category-card {
+            &:nth-child(#{$cols}n + 1):not(:nth-last-child(n + #{$cols + 1})) {
+              --card-border-bottom-left-radius: var(--radius-xs);
+            }
 
-        &:nth-child(#{$cols}n):last-child {
-          --card-border-bottom-right-radius: var(--radius-xs);
+            &:nth-child(#{$cols}n):last-child {
+              --card-border-bottom-right-radius: var(--radius-xs);
+            }
+          }
         }
       }
     }
