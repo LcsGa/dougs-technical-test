@@ -24,7 +24,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
       }
     }
 
-    @include bottomCornersRadius(3);
+    @include bottomCornersRadius(2);
 
     @container (width < 720px) {
       @include bottomCornersRadius(1);
