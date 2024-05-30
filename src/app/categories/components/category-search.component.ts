@@ -1,5 +1,5 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { FormFieldModule } from '../../shared/components/form-field';
 import { IconComponent } from '../../shared/components/icon';
@@ -9,7 +9,7 @@ import { CategoriesService } from '../categories.service';
 @Component({
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormFieldModule, IconComponent, SelectModule, FormsModule],
+  imports: [FormFieldModule, IconComponent, SelectModule, FormsModule, AsyncPipe],
   selector: 'app-category-search',
   host: { role: 'search' },
   styles: `
@@ -43,7 +43,7 @@ import { CategoriesService } from '../categories.service';
     <app-select [(ngModel)]="categoriesService.group">
       <option [value]="null">Toutes les catégories</option>
 
-      @for (group of groups(); track group.id) {
+      @for (group of categoriesService.groups$ | async; track group.id) {
         <option [value]="group.id">{{ group.name }}</option>
       }
     </app-select>
@@ -51,6 +51,4 @@ import { CategoriesService } from '../categories.service';
 })
 export class CategorySearchComponent {
   readonly categoriesService = inject(CategoriesService);
-
-  readonly groups = toSignal(this.categoriesService.groups$, { initialValue: [] });
 }

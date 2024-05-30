@@ -1,14 +1,12 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../shared/components/button';
 import { CardComponent } from '../shared/components/card';
 import { TabComponent } from '../shared/components/tab';
-import { State } from '../shared/rxjs';
 import { ErrorRetryComponent, LayoutComponent } from '../shared/templates';
 import { CategoriesService } from './categories.service';
 import { CategorySearchComponent } from './components/category-search.component';
-import { Category } from './types/category';
 
 @Component({
   standalone: true,
@@ -21,6 +19,7 @@ import { Category } from './types/category';
     RouterOutlet,
     ButtonComponent,
     ErrorRetryComponent,
+    AsyncPipe,
   ],
   selector: 'app-categories',
   styles: `
@@ -47,14 +46,16 @@ import { Category } from './types/category';
       <app-card>
         <app-category-search />
 
-        @if (categoriesState().data) {
-          <router-outlet />
-        } @else if (categoriesState().pending) {
-          <p class="message">Chargement des categories en cours...</p>
-        } @else if (categoriesState().error) {
-          <app-error-retry class="message" (retry)="categoriesService.retry.emit()">
-            Erreur lors du chargement des categories...
-          </app-error-retry>
+        @if (categoriesService.categoriesState$ | async; as state) {
+          @if (state.data) {
+            <router-outlet />
+          } @else if (state.pending) {
+            <p class="message">Chargement des categories en cours...</p>
+          } @else if (state.error) {
+            <app-error-retry class="message" (retry)="categoriesService.retry.emit()">
+              Erreur lors du chargement des categories...
+            </app-error-retry>
+          }
         }
       </app-card>
 
@@ -68,8 +69,4 @@ import { Category } from './types/category';
 })
 export default class CategoriesComponent {
   readonly categoriesService = inject(CategoriesService);
-
-  readonly categoriesState = toSignal(this.categoriesService.categoriesState$, {
-    initialValue: { pending: true } as State<Category[]>,
-  });
 }

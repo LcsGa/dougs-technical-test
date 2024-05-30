@@ -1,5 +1,5 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { PillComponent } from '../../shared/components/pill';
 import { CategoriesService } from '../categories.service';
 import { CategoryCardComponent } from '../components/category-card.component';
@@ -8,7 +8,7 @@ import { CategoryCardsGridComponent } from '../components/category-cards-grid.co
 @Component({
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CategoryCardsGridComponent, CategoryCardComponent, PillComponent],
+  imports: [CategoryCardsGridComponent, CategoryCardComponent, PillComponent, AsyncPipe],
   selector: 'app-categories-group',
   styles: `
     app-pill {
@@ -17,7 +17,7 @@ import { CategoryCardsGridComponent } from '../components/category-cards-grid.co
     }
   `,
   template: `
-    @for (groupCategories of groupedCategories(); track groupCategories.group?.id) {
+    @for (groupCategories of categoriesService.groupedCategories$ | async; track groupCategories.group?.id) {
       <app-pill [color]="groupCategories.group?.color" fullWidth>
         {{ groupCategories.group?.name ?? 'Sans groupe' }}
       </app-pill>
@@ -36,6 +36,4 @@ import { CategoryCardsGridComponent } from '../components/category-cards-grid.co
 })
 export default class CategoriesGroupPage {
   readonly categoriesService = inject(CategoriesService);
-
-  readonly groupedCategories = toSignal(this.categoriesService.groupedCategories$, { initialValue: [] });
 }
