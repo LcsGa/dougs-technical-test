@@ -106,6 +106,7 @@ export class SelectComponent<T extends string | number | null> implements Contro
                 const value = option.value();
                 this.selection.set(value);
                 this.#onChange(value);
+                this.#onTouched();
                 this.popoverDirective.hide();
               }),
             ),
